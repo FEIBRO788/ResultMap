@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.TeacherMapper">
+<!--&lt;!&ndash;    resulttype自动映射&ndash;&gt;-->
+<!--    <select id="getTeacherById" resultType="cn.tedu.pojo.Teacher">-->
+<!--        select * from teacher where id=#{id}-->
+<!--    </select>-->
+    <select id="getTeacherById" resultMap="teacher">
+        SELECT *
+        FROM teacher
+        WHERE id = #{id}
+    </select>
+    <resultMap id="teacher" type="cn.tedu.pojo.Teacher">
+        <!--指定主键列的封装规则
+            id定义主键,底层会有优化
+            column:指定数据库表的哪一列
+            property:指定javaBean的那一属性（实体类）
+        -->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="title" property="title"/>
+        <result column="manager" property="manager"/>
+        <result column="salary" property="salary"/>
+        <result column="comm" property="comm"/>
+        <result column="gender" property="gender"/>
+        <result column="subject_id" property="subjectId"/>
+    </resultMap>
+</mapper>

@@ -9,9 +9,9 @@ spring:
 #subject_id ? subjectId
 mybatis:
   configuration:
-  # map-underscore-to-camel-case: true  # ??????
-  mapper-locations: classpath:mappers/*.xml
-#  type-aliases-package: cn.tedu.pojo
+    map-underscore-to-camel-case: true  # 启用驼峰映射（取消注释）
+  mapper-locations: classpath:mappers/*.xml  # 同级缩进
+  type-aliases-package: cn.tedu.pojo
 
 #????
 logging:

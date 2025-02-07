@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface TeacherMapper {
     public Teacher getTeacherById(@Param("id") Integer id);
 //    public Teacher getTeacherSubjectById(Integer id);
-//    public Teacher selectTeacherSubjectById(Integer id);
+   public Teacher selectTeacherSubjectById(Integer id);
 }

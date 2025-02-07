@@ -12,7 +12,23 @@
         FROM teacher
         WHERE id = #{id}
     </select>
-    <resultMap id="teacher" type="cn.tedu.pojo.Teacher">
+    <select id="selectTeacherSubjectById" resultMap="teacher3">
+        SELECT t.id,
+               t.name,
+               t.age,
+               t.title,
+               t.manager,
+               t.salary,
+               t.comm,
+               t.gender,
+               t.subject_id,
+               s.id   sid, -- 如果两张表有同名字段时,手动映射,底层是分不清要赋值的字段是哪个表的字段,所以需要在定义SQL时,将字段起别名
+               s.name sname
+        FROM teacher t
+                 LEFT JOIN subject s ON t.subject_id = s.id
+        WHERE t.id = #{id}
+    </select>
+    <resultMap id="teacher" type="Teacher">
         <!--指定主键列的封装规则
             id定义主键,底层会有优化
             column:指定数据库表的哪一列
@@ -27,5 +43,13 @@
         <result column="comm" property="comm"/>
         <result column="gender" property="gender"/>
         <result column="subject_id" property="subjectId"/>
+    </resultMap>
+    <resultMap id="teacher3" type="Teacher" autoMapping="true">
+        <result column="subject_id" property="subjectId"/>
+
+        <association property="subject" javaType="Subject" autoMapping="true">
+            <id column="sid" property="id"/>
+            <result column="sname" property="name"/>
+        </association>
     </resultMap>
 </mapper>

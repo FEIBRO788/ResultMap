@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.SubjectMapper">
+
+    <select id="getSubjectTeacherByName" resultMap="subject" >
+        SELECT s.id,
+               s.name,
+               t.id   tid,
+               t.name tname,
+               t.age,
+               t.title,
+               t.manager,
+               t.salary,
+               t.comm,
+               t.gender,
+               t.subject_id
+        FROM subject s
+                 LEFT JOIN teacher t ON s.id = t.subject_id
+        WHERE s.name = #{name};
+
+    </select>
+    <resultMap id="subject" type="Subject" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="teacher" ofType="Teacher">
+            <id column="tid" property="id"/>
+            <result column="tname" property="name"/>
+            <result column="age" property="age"/>
+            <result column="title" property="title"/>
+            <result column="manager" property="manager"/>
+            <result column="salary" property="salary"/>
+            <result column="comm" property="comm"/>
+            <result column="gender" property="gender"/>
+            <result column="subject_id" property="subjectId"/>
+        </collection>
+    </resultMap>
+</mapper>

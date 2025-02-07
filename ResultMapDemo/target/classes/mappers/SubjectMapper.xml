@@ -5,35 +5,30 @@
 <mapper namespace="cn.tedu.mapper.SubjectMapper">
 
     <select id="getSubjectTeacherByName" resultMap="subject" >
-        SELECT s.id,
-               s.name,
-               t.id   tid,
-               t.name tname,
-               t.age,
-               t.title,
-               t.manager,
-               t.salary,
-               t.comm,
-               t.gender,
-               t.subject_id
-        FROM subject s
-                 LEFT JOIN teacher t ON s.id = t.subject_id
-        WHERE s.name = #{name};
+        SELECT
+            s.id,
+            s.name,
+            t.id   AS t_id,      -- 统一前缀为 t
+            t.name AS t_name,
+            t.age  AS t_age,
+            t.title as t_title,
+            t.manager as t_manager,
+            t.salary as t_salary,
+            t.comm as t_comm,
+            t.gender as t_gender,
+            t.subject_id as t_subjectId
+            FROM subject s
+            LEFT JOIN teacher t ON s.id = t.subject_id
+        WHERE s.name = #{name}
 
     </select>
     <resultMap id="subject" type="Subject" autoMapping="true">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
-        <collection property="teacher" ofType="Teacher">
-            <id column="tid" property="id"/>
-            <result column="tname" property="name"/>
-            <result column="age" property="age"/>
-            <result column="title" property="title"/>
-            <result column="manager" property="manager"/>
-            <result column="salary" property="salary"/>
-            <result column="comm" property="comm"/>
-            <result column="gender" property="gender"/>
-            <result column="subject_id" property="subjectId"/>
-        </collection>
+        <!-- 引用 TeacherMapper 中的 resultMap，用TeacherMapper中定义过的规则：resultMap="cn.tedu.mapper.TeacherMapper.teacher"，并指定字段前缀为 t_ -->
+        <collection property="teachers" resultMap="cn.tedu.mapper.TeacherMapper.teacher"
+                    columnPrefix="t_"/>
     </resultMap>
+
+
 </mapper>

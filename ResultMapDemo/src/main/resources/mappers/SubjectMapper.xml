@@ -17,8 +17,8 @@
             t.comm as t_comm,
             t.gender as t_gender,
             t.subject_id as t_subjectId
-            FROM subject s
-            LEFT JOIN teacher t ON s.id = t.subject_id
+        FROM subject s
+                 LEFT JOIN teacher t ON s.id = t.subject_id
         WHERE s.name = #{name}
 
     </select>

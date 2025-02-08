@@ -9,4 +9,5 @@ public interface SubjectMapper {
     public Subject getSubjectTeacherByName(String name);
 
 
+
 }

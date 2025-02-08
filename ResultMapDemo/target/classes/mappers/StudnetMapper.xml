@@ -8,4 +8,73 @@
         where birth>#{minbirth}
         and birth &lt;#{maxbirth};
     </select>
+    <select id="selectListByBirth2" resultType="Student">
+        SELECT *
+        FROM student
+        <if test="minbirth != null and maxbirth == null">
+            WHERE birth >= #{minbirth}
+        </if>
+        <if test="minbirth == null and maxbirth != null">
+            WHERE birth &lt;= #{maxbirth}
+        </if>
+        <if test="minbirth != null and maxbirth != null">
+            WHERE birth >= #{minbirth} AND birth &lt;= #{maxbirth}
+        </if>
+
+
+    </select>
+    <select id="selectListByBirth3" resultType="Student">
+        select * from student
+                 where 1=1
+        <if test="minbirth!=null">
+            and birth>=#{minbirth}
+        </if>
+        <if test="maxbirth!=null">
+            and birth &lt;#{maxbirth}
+        </if>
+    </select>
+    <delete id="deleteStudentById1">
+        delete from student
+        where  id in(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+    <delete id="deleteStudentById2">
+        delete from student
+        where  id in(
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <update id="updateStudentById">-- 传统sql更新:
+        update student
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="age!=null and age !=''">age=#{age},</if>
+            <if test="gender!=null and gender !=''">gender=#{gender},</if>
+            <if test="job!=null and job!=''">job=#{job},</if>
+
+
+        </set>
+        where id=#{id};
+    </update>
+    <update id="updateStudentByDynamicUpdate">
+        update student
+        <set>
+            <if test="name!=null">name =#{name},</if>
+            <if test="age!=null">age=#{age},</if>
+            <if test="job!=null">job=#{job},</if>
+            <if test="locationId!=null">location_id=#{locationId},</if>
+            <if test="classId!=null">class_id=#{classId},</if>
+            <if test="teamLeader!=null">team_leader=#{teamLeader},</if>
+
+        </set>
+        where id=#{id};
+    </update>
+
+
 </mapper>
